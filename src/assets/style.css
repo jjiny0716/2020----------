@@ -1,5 +1,18 @@
 :root {
-  --color-gray: #ddd;
+  --color-keyword-background: #aaa;
+  --color-dark-mode-toggle-btn-background: #111;
+  --color-moon: #f1c40f;
+  --color-sun: #f39c12;
+}
+
+:root[color-theme="light"] {
+  --color-background: #fff;
+  --color-text: #000;
+}
+
+:root[color-theme="dark"] {
+  --color-background: #111;
+  --color-text: #fff;
 }
 
 @font-face {
@@ -23,7 +36,14 @@ body * {
   box-sizing: inherit;
 }
 
+body {
+  color: var(--color-text);
+  background-color: var(--color-background);
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
 #app {
+  position: relative;
   margin: 1.5em auto;
   max-width: 1200px;
   column-gap: 1.5em;
@@ -60,7 +80,7 @@ body * {
   padding: 5px 10px;
   border-radius: 7px;
   margin-right: 10px;
-  background-color: var(--color-gray );
+  background-color: var(--color-keyword-background);
   cursor: pointer;
 }
 
@@ -168,11 +188,42 @@ body * {
   to { -webkit-transform: rotate(360deg); }
 }
 
-/* dark mode 처리
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #000;
-    color: white;
-  }
+.dark-mode-toggle-btn {
+  position: absolute;
+  top: 0px;
+  left: -100px;
+  width: 74px;
+  height: 40px;
+  padding: 4px 4px 4px 6px;
+  border: none;
+  border-radius: 20px;
+  font-size: 24px;
+  background-color: var(--color-dark-mode-toggle-btn-background);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
-*?
+
+.dark-mode-toggle-btn .fa-moon {
+  color: var(--color-moon);
+}
+
+.dark-mode-toggle-btn .fa-sun {
+  color: var(--color-sun);
+}
+
+.dark-mode-toggle-btn .circle {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  transition: all 300ms ease;
+}
+
+.dark-mode-toggle-btn .circle.active {
+  transform: translateX(34px);
+}

@@ -3,11 +3,14 @@ import SearchInput from './components/SearchInput.mjs';
 import RandomCatBanner from './components/RandomCatBanner.mjs';
 import SearchResult from './components/SearchResult.mjs';
 import ImageInfo from './components/ImageInfo.mjs';
+import DarkModeToggleButton from './components/DarkModeToggleButton.mjs';
+import { setColorThemeByOSTheme } from './utils/setColorThemeByOSTheme.mjs'
 import { catClient } from './api/catClient.mjs'
 import { store } from "./store/store.mjs"
 
 export default class App extends Component {
 	setup() {
+		setColorThemeByOSTheme();
 		this.state = this.loadData() ?? {
 			beforeFirstSearch: true,
 			data: [],
@@ -30,6 +33,7 @@ export default class App extends Component {
     </main>
 		${isLoading ? '<div id="loading"></div>' : ""}
     ${imageInfoOn ? '<div class="ImageInfo" data-component="ImageInfo"></div>' : ''}
+		<button class="dark-mode-toggle-btn" data-component="DarkModeToggleButton"></button>
     `;
 	}
 
@@ -63,6 +67,9 @@ export default class App extends Component {
 					closeImageInfo: closeImageInfo.bind(this),
 				};
 			});
+		}
+		else if (name === 'DarkModeToggleButton') {
+			return new DarkModeToggleButton(target);
 		}
 	}
 

@@ -1,0 +1,178 @@
+:root {
+  --color-gray: #ddd;
+}
+
+@font-face {
+  font-family: "Goyang";
+  src: url("./fonts/Goyang.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body * {
+  font-family: Goyang;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+#app {
+  margin: 1.5em auto;
+  max-width: 1200px;
+  column-gap: 1.5em;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-controls {
+  display: flex;
+}
+
+.search-controls .SearchInput {
+  width: 100%;
+  font-size: 40px;
+  padding: 10px 15px;
+  margin-right: 10px;
+}
+
+.search-controls .random-cat-btn {
+  width: 75px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.recent-keywords {
+  margin-top: 10px;
+  font-size: 1.2em;
+}
+
+.recent-keywords .keyword {
+  padding: 5px 10px;
+  border-radius: 7px;
+  margin-right: 10px;
+  background-color: var(--color-gray );
+  cursor: pointer;
+}
+
+.no-result-warning {
+  font-size: 2.0em;
+  text-align: center;
+}
+
+.RandomCatBanner {
+  height: 250px;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.RandomCatBanner .item {
+  width: 240px;
+  height: 240px;
+}
+
+.RandomCatBanner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.SearchResult {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(250px, 1fr));
+  grid-gap: 10px;
+}
+
+.SearchResult img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.SearchResult .item {
+  background-color: #eee;
+  display: inline-block;
+  margin: 0 0 1em;
+  width: 100%;
+}
+
+.ImageInfo {
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: all 500ms ease;
+}
+
+.ImageInfo .title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ImageInfo .close {
+  cursor: pointer;
+}
+
+.ImageInfo .title,
+.ImageInfo .description {
+  padding: 5px;
+}
+
+.ImageInfo .content-wrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+.ImageInfo .content-wrapper img {
+  width: 100%;
+}
+
+#loading {
+  position: absolute;
+  top: calc(50vh - 25px);
+  left: calc(50vw - 25px);
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  border-top-color: #000;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}
+
+/* dark mode 처리
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #000;
+    color: white;
+  }
+}
+*?

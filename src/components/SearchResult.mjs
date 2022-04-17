@@ -1,15 +1,14 @@
 import Component from '../core/Component.mjs';
+import { imageLazyLoader } from '../utils/lazyLoader.mjs';
 
 export default class SearchResult extends Component {
-	setup() {}
-
 	template() {
 		const { data } = this.props;
 		return `
     ${data
 			.map(cat => `
         <div class="item">
-          <img src=${cat.url} alt=${cat.name} />
+          <img class="lazy" src="./src/assets/images/empty.png" alt=${cat.name} data-src=${cat.url} />
         </div>
       `)
 			.join('')}
@@ -23,5 +22,13 @@ export default class SearchResult extends Component {
       const index = [...this.target.querySelectorAll(".item")].findIndex((item) => item === selectedItem);
       showImageInfo(index);
     })
+  }
+
+  afterMount() {
+    imageLazyLoader.observeAll(this.target.querySelectorAll("img.lazy"));
+  }
+
+  afterUpdate() {
+    imageLazyLoader.observeAll(this.target.querySelectorAll("img.lazy"));
   }
 }

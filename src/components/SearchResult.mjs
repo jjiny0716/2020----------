@@ -1,5 +1,5 @@
 import Component from '../core/Component.mjs';
-import { imageLazyLoader } from '../utils/lazyLoader.mjs';
+import { imageLazyLoader } from '../utils/LazyLoader.mjs';
 
 export default class SearchResult extends Component {
 	template() {

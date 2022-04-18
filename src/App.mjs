@@ -80,25 +80,13 @@ export default class App extends Component {
 
 	async onSearch(keyword) {
 		this.setState({ isLoading: true });
-		let data = [];
-		try {
-			const { data: responseData } = await catClient.fetchCatsByKeyword(keyword);
-			data = responseData;
-		} catch {
-			data = [];
-		}
+		const { data } = await catClient.fetchCatsByKeyword(keyword);
 		this.setState({ beforeFirstSearch: false, data, isLoading: false });
 	}
 
 	async getRandomCats() {
 		this.setState({ isLoading: true });
-		let data = [];
-		try {
-			const { data: responseData } = await catClient.fetchRandomCats();
-			data = responseData;
-		} catch {
-			data = [];
-		}
+		const { data } = await catClient.fetchRandomCats();
 		this.setState({ beforeFirstSearch: false, data, isLoading: false });
 	}
 	

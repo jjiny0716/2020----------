@@ -175,3 +175,44 @@ img, iframe 태그에 'loading=lazy' 속성을 추가해주면 native lazy loadi
 - https://developer.mozilla.org/ko/docs/Web/API/Intersection_Observer_API
 - https://github.com/hanameee/vanillaJSKitty/blob/master/studyLog.md#intersection-observer-%EC%9D%B4%EB%9E%80
 - https://helloinyong.tistory.com/297#title-5
+
+## 비동기 처리 에러 핸들링하기
+
+내가 작성했던 방식은 api를 호출하는 모든 곳에서 try catch를 걸고있어 산만하고, 코드의 중복이 발생하고 있는 상태였다.  
+rest api의 get 요청을 함수로 추상화해놨으니, 일단 해당 함수에서 오류를 처리하도록 바꿔봤다.
+
+```js
+// get 요청 추상화
+async function getRequest(url) {
+  try {
+    const result = await fetch(url);
+    if (!result.ok) {
+      // 나름대로 status code에 따라 에러를 분리해봤다.
+      const { status } = result;
+      if (status >= 400 && status < 500) throw new Error(`요청 오류: ${status}`);
+      else if (status >= 500 && status < 600) throw new Error(`서버 오류: ${status}`);
+      throw new Error(`오류: ${status}`);
+    }
+    return await result.json();
+  } catch (e) {
+    console.warn(e);
+    return null;
+  }
+}
+
+// 사용하는 곳
+async function fetchRandomCats() {
+  // 데이터를 반환하나, 요청의 결과가 null이면 빈 데이터를 반환함
+  return (await getRequest(`${API_ENDPOINT}/api/cats/random50`)) ?? { data: [] };
+}
+```
+
+그런데, 만약 api를 사용하는 곳에서 에러 유무를 알아야한다면 어떻게해야할까? 예를 들어, 오류가 나면, 빈 데이터를 렌더링하는 것이 아니라, 오류 페이지를 렌더링하고 싶다면?  
+어쩔 수 없이 api를 사용하는 곳에서 try catch를 이용해야 할 것같다.  
+아니면 에러를 던지지 말고, 에러에 대한 정보를 담은 object나 튜플을 던지는 것도 고려해볼 수 있겠다.
+
+### 참고한 자료
+
+- https://ko.wikipedia.org/wiki/HTTP_%EC%83%81%ED%83%9C_%EC%BD%94%EB%93%9C
+- https://velog.io/@hyeon930/%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%9A%94%EC%B2%AD-%EC%97%90%EB%9F%AC-%ED%95%B8%EB%93%A4%EB%A7%81%ED%95%98%EA%B8%B0
+- https://www.rinae.dev/posts/how-to-handle-errors-1

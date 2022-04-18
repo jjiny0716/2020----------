@@ -47,7 +47,7 @@ export default class ImageInfo extends Component {
 
   async loadingAdditionalCatInfo() {
     let { catInfo } = this.state;
-    catInfo = await catClient.fetchCatInfo(catInfo.id);
-    this.setState({ catInfo: catInfo.data });
+    catInfo = (await catClient.fetchCatInfo(catInfo.id)).data ?? catInfo;
+    this.setState({ catInfo });
   }
 }

@@ -4,31 +4,29 @@ async function getRequest(url) {
 	try {
 		const result = await fetch(url);
 		if (!result.ok) {
-			throw new Error("서버 상태가 불안정합니다.");
+			const { status } = result;
+			if (status >= 400 && status < 500) throw new Error(`요청 오류: ${status}`);
+			else if (status >= 500 && status < 600) throw new Error(`서버 오류: ${status}`);
+			throw new Error(`오류: ${status}`);
 		}
-		return result;
+		return await result.json();
 	} catch (e) {
 		console.warn(e);
+		return null;
 	}
 }
 
 class CatClient {
 	async fetchCatsByKeyword(keyword) {
-		const response = await getRequest(`${API_ENDPOINT}/api/cats/search?q=${keyword}`);
-		const data = await response.json();
-		return data;
+		return await getRequest(`${API_ENDPOINT}/api/cats/search?q=${keyword}`) ?? { data: [] };
 	}
 
 	async fetchRandomCats() {
-		const response = await getRequest(`${API_ENDPOINT}/api/cats/random50`);
-		const data = await response.json();
-		return data;
+		return await getRequest(`${API_ENDPOINT}/api/cats/random50`) ?? { data: [] };
 	}
 
 	async fetchCatInfo(id) {
-		const response = await getRequest(`${API_ENDPOINT}/api/cats/${id}`);
-		const data = await response.json();
-		return data;
+		return await getRequest(`${API_ENDPOINT}/api/cats/${id}`);
 	}
 }
 

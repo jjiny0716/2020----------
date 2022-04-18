@@ -25,13 +25,7 @@ export default class RandomCatBanner extends Component {
 	}
 
   async loadingRandomCats() {
-    let data = [];
-		try {
-			const { data: responseData } = await catClient.fetchRandomCats();
-			data = responseData;
-		} catch {
-			data = [];
-		}
+		const { data } = await catClient.fetchRandomCats();
     this.setState({ data });
   }
 

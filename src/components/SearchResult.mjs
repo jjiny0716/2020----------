@@ -9,6 +9,7 @@ export default class SearchResult extends Component {
 			.map(cat => `
         <div class="item">
           <img class="lazy" src="./src/assets/images/empty.png" alt=${cat.name} data-src=${cat.url} />
+          <span class="cat-name">${cat.name}</span>
         </div>
       `)
 			.join('')}

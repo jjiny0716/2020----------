@@ -8,6 +8,7 @@ export default class ImageInfo extends Component {
       catInfo,
     }
 
+    this.active();
     this.loadingAdditionalCatInfo();
   }
 
@@ -31,7 +32,10 @@ export default class ImageInfo extends Component {
   setEvents() {
     const { closeImageInfo } = this.props;
     this.addEventListener("click", ".ImageInfo", (e) => {
-      if (e.target === e.currentTarget || e.target.classList.contains("close")) closeImageInfo();
+      if (e.target === e.currentTarget || e.target.classList.contains("close")) {
+        this.target.classList.remove("active");
+        setTimeout(closeImageInfo, 500);
+      }
     });
     
     this.onESC = (e) => {
@@ -43,6 +47,13 @@ export default class ImageInfo extends Component {
 
   beforeUnmount() {
     removeEventListener("keydown", this.onESC);
+  }
+
+  active() {
+    // for transition
+    setTimeout(() => {
+      this.target.classList.add("active");
+    }, 0);
   }
 
   async loadingAdditionalCatInfo() {

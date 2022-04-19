@@ -121,6 +121,7 @@ body {
 }
 
 .SearchResult .item {
+  position: relative;
   background-color: #eee;
   display: inline-block;
   margin: 0 0 1em;
@@ -128,15 +129,35 @@ body {
   width: 100%;
 }
 
+.SearchResult .item .cat-name {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  padding: 2px 10px;
+  border-radius: 7px;
+  background-color: #fff;
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+
+.SearchResult .item:hover .cat-name {
+  opacity: 1;
+}
+
 .ImageInfo {
   display: block;
   position: fixed;
   left: 0;
   top: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
-  transition: all 500ms ease;
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+
+.ImageInfo.active {
+  opacity: 1;
 }
 
 .ImageInfo .title {
@@ -227,4 +248,25 @@ body {
 
 .dark-mode-toggle-btn .circle.active {
   transform: translateX(34px);
+}
+
+@media (max-width: 992px) {
+  .SearchResult {
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .SearchResult {
+    grid-template-columns: repeat(2, minmax(250px, 1fr));
+  }
+  .ImageInfo .content-wrapper {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .SearchResult {
+    grid-template-columns: repeat(1, minmax(250px, 1fr));
+  }
 }

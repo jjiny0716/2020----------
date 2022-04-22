@@ -72,7 +72,7 @@ body {
 }
 
 .recent-keywords {
-  margin-top: 10px;
+  margin: 10px 0;
   font-size: 1.2em;
 }
 
@@ -90,21 +90,60 @@ body {
 }
 
 .RandomCatBanner {
+  position: relative;
   height: 250px;
-  display: flex;
-  justify-content: space-between;
+  width: 100%;
+  display: inline-flex;
+  justify-content: left;
   overflow: hidden;
 }
 
 .RandomCatBanner .item {
-  width: 240px;
+  min-width: 240px;
   height: 240px;
+}
+
+.RandomCatBanner .item.hidden {
+  display: none;
 }
 
 .RandomCatBanner img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.RandomCatBanner button {
+  position: absolute;
+  right: 0;
+  bottom: calc(50% - 25px);
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  font-size: 1.5em;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 300ms ease;
+}
+
+.RandomCatBanner button:hover {
+  border-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.RandomCatBanner button:disabled {
+  cursor: not-allowed;
+  /* pointer-events: none; */
+}
+
+.RandomCatBanner .prev-btn {
+  left: 10px;
+}
+
+.RandomCatBanner .next-btn {
+  right: 10px;
 }
 
 .SearchResult {

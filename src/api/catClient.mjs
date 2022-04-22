@@ -17,12 +17,14 @@ async function getRequest(url) {
 }
 
 class CatClient {
-	async fetchCatsByKeyword(keyword) {
-		return await getRequest(`${API_ENDPOINT}/api/cats/search?q=${keyword}`) ?? { data: [] };
+	async fetchCatsByKeyword(keyword, page) {
+		return await getRequest(`${API_ENDPOINT}/api/cats/search?q=${keyword}&page=${page}`) ?? { data: [] };
 	}
 
-	async fetchRandomCats() {
-		return await getRequest(`${API_ENDPOINT}/api/cats/random50`) ?? { data: [] };
+	async fetchRandomCats(tryCount = 1) {
+		// 최대 10번 로딩 시도후, 데이터를 얻지 못했으면 빈 데이터 반환
+		if (tryCount > 10) return { data: [] };
+		return await getRequest(`${API_ENDPOINT}/api/cats/random50`) ?? await this.fetchRandomCats(tryCount + 1);
 	}
 
 	async fetchCatInfo(id) {

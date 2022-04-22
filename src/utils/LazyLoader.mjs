@@ -29,7 +29,7 @@ class ImageLazyLoader {
 // img태그의 src를 data-src에 있던 링크로 설정하여, 이미지를 로딩시킨다. 
 function loadImage(imageElement) {
   console.log("lazy loaded.");
-  imageElement.src = imageElement.dataset.src;
+  if (imageElement.dataset.src) imageElement.src = imageElement.dataset.src;
   imageElement.classList.remove("lazy");
 }
 

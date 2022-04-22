@@ -3,13 +3,15 @@ import { imageLazyLoader } from '../utils/LazyLoader.mjs';
 
 export default class SearchResult extends Component {
 	template() {
-		const { data } = this.props;
+		const { data, lastImageLoadedIndex } = this.props;
 		return `
     ${data
-			.map(cat => `
+			.map(({ name, url }, i) => `
         <div class="item">
-          <img class="lazy" src="./src/assets/images/empty.png" alt=${cat.name} data-src=${cat.url} />
-          <span class="cat-name">${cat.name}</span>
+        ${i <= lastImageLoadedIndex 
+          ? `<img src="${url}" alt="${name}" />`
+          : `<img class="lazy" src="./src/assets/images/empty.png" alt="${name}" data-src="${url}" />`}
+          <span class="cat-name">${name}</span>
         </div>
       `)
 			.join('')}

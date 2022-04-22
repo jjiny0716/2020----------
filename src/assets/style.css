@@ -189,13 +189,13 @@ body {
 }
 
 #loading {
-  position: absolute;
+  position: fixed;
   top: calc(50vh - 25px);
   left: calc(50vw - 25px);
   display: inline-block;
-  width: 50px;
-  height: 50px;
-  border: 3px solid rgba(0, 0, 0, 0.2);
+  width: 75px;
+  height: 75px;
+  border: 5px solid rgba(0, 0, 0, 0.4);
   border-radius: 50%;
   border-top-color: #000;
   animation: spin 1s ease-in-out infinite;
@@ -248,6 +248,12 @@ body {
 
 .dark-mode-toggle-btn .circle.active {
   transform: translateX(34px);
+}
+
+.sentinel {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
 }
 
 @media (max-width: 992px) {
